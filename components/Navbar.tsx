@@ -33,7 +33,7 @@ const Navbar = async () => {
         {session?.user ? (
           <>
             <ProfileMenu session={session} />
-            <Link href='/create-project'>share</Link>
+            <Link href='/create-project'>Share Work</Link>
           </>
         ) : (
           <AuthProviders />
