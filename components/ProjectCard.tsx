@@ -67,7 +67,6 @@ const ProjectCard = ({ id, image, title, name, avatarUrl, userId }: Props) => {
               width={12}
               height={9}
               alt='eye'
-              style={{ width: 'auto' }}
             />
             <p className='text-sm'>{randomViews}</p>
           </div>
