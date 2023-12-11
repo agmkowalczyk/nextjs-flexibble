@@ -8,6 +8,8 @@ import FormField from './FormField'
 import { categoryFilters } from '@/constants'
 import CustomMenu from './CustomMenu'
 import Button from './Button'
+import { createNewProject, fetchToken } from '@/lib/actions'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   type: string
@@ -16,6 +18,7 @@ type Props = {
 }
 
 const ProjectForm = ({ type, session, project }: Props) => {
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   const [form, setForm] = useState({
@@ -29,6 +32,33 @@ const ProjectForm = ({ type, session, project }: Props) => {
 
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault()
+
+    setIsSubmitting(true)
+
+    const { token } = await fetchToken()
+
+    try {
+      if (type === 'create') {
+        await createNewProject(form, session?.user?.id, token)
+
+        router.push('/')
+      }
+
+      if (type === 'edit') {
+        // await updateProject(form, project?.id as string, token)
+
+        router.push('/')
+      }
+    } catch (error) {
+      console.log(error)
+      // alert(
+      //   `Failed to ${
+      //     type === 'create' ? 'create' : 'edit'
+      //   } a project. Try again!`
+      // )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
