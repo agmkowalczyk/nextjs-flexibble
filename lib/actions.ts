@@ -100,14 +100,15 @@ export const fetchToken = async () => {
 
 export const fetchAllProjects = async (
   category?: string | null,
-  endcursor?: string | null
+  endCursor?: string | null
 ) => {
+  let filter: any = { category: { eq: category } }
   if (!category) {
-    category = 'Frontend'
+    filter = {}
   }
 
   client.setHeader('x-api-key', apiKey)
-  return makeGraphQLRequest(projectsQuery, { category, endcursor })
+  return makeGraphQLRequest(projectsQuery, { filter, endCursor })
 }
 
 export const getProjectDetails = (id: string) => {

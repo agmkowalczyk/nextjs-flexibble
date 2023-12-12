@@ -23,19 +23,22 @@ const Modal = ({ children }: { children: ReactNode }) => {
   )
 
   return (
-    <div ref={overlay} className='modal' onClick={(e) => handleClick(e)}>
-      <button
-        type='button'
-        onClick={onDismiss}
-        className='absolute top-4 right-8'
-      >
-        <Image src='/close.svg' width={17} height={17} alt='close' />
-      </button>
+    <>
+      <div></div>
+      <div ref={overlay} className='modal' onClick={(e) => handleClick(e)}>
+        <button
+          type='button'
+          onClick={onDismiss}
+          className='absolute top-4 right-8'
+        >
+          <Image src='/close.svg' width={17} height={17} alt='close' />
+        </button>
 
-      <div ref={wrapper} className='modal_wrapper'>
-        {children}
+        <div ref={wrapper} className='modal_wrapper'>
+          {children}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

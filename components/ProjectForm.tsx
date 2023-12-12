@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 
-import { FormState, ProjectInterface, SessionInterface } from '@/common.types'
+import { ProjectInterface, SessionInterface } from '@/common.types'
 import Image from 'next/image'
 import FormField from './FormField'
 import { categoryFilters } from '@/constants'
