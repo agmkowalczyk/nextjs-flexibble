@@ -1,10 +1,11 @@
-import { ProjectForm } from '@/common.types'
+import { ProjectForm, SessionInterface, UserProfile } from '@/common.types'
 import {
   createProjectMutation,
   createUserMutation,
   deleteProjectMutation,
   getProjectByIdQuery,
   getProjectsOfUserQuery,
+  getUserByIdQuery,
   getUserQuery,
   projectsQuery,
   updateProjectMutation,
@@ -26,7 +27,8 @@ const client = new GraphQLClient(apiUrl)
 
 const makeGraphQLRequest = async (query: string, variables = {}) => {
   try {
-    return await client.request(query, variables)
+    const response: any = await client.request(query, variables)
+    return response?.mongoDB
   } catch (err) {
     throw err
   }
@@ -67,7 +69,10 @@ const uploadImage = async (imagePath: string) => {
 
 export const createNewProject = async (
   form: ProjectForm,
-  creatorId: string,
+  id: string,
+  name: string,
+  email: string,
+  avatarUrl: string,
   token: string
 ) => {
   const imageUrl = await uploadImage(form.image)
@@ -80,7 +85,10 @@ export const createNewProject = async (
         ...form,
         image: imageUrl.url,
         createdBy: {
-          link: creatorId,
+          id,
+          name,
+          email,
+          avatarUrl,
         },
       },
     }
@@ -121,6 +129,11 @@ export const getUserProjects = (id: string, last?: number) => {
   return makeGraphQLRequest(getProjectsOfUserQuery, { id, last })
 }
 
+export const getUserById = (id: string) => {
+  client.setHeader('x-api-key', apiKey)
+  return makeGraphQLRequest(getUserByIdQuery, { id })
+}
+
 export const deleteProject = (id: string, token: string) => {
   client.setHeader('Authorization', `Bearer ${token}`)
   return makeGraphQLRequest(deleteProjectMutation, { id })
@@ -152,7 +165,10 @@ export const updateProject = async (
 
   const variables = {
     id: projectId,
-    input: updatedForm,
+    input: Object.entries(updatedForm).reduce(
+      (obj = {}, [key, value]) => ({ ...obj, [key]: { set: value } }),
+      {}
+    ),
   }
 
   return makeGraphQLRequest(updateProjectMutation, variables)

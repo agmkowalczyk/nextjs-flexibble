@@ -36,10 +36,11 @@ const ProjectForm = ({ type, session, project }: Props) => {
     setIsSubmitting(true)
 
     const { token } = await fetchToken()
+    const { id, name, email, avatarUrl } = session?.user
 
     try {
       if (type === 'create') {
-        await createNewProject(form, session?.user?.id, token)
+        await createNewProject(form, id, name, email, avatarUrl, token)
 
         router.push('/')
       }
@@ -51,11 +52,6 @@ const ProjectForm = ({ type, session, project }: Props) => {
       }
     } catch (error) {
       console.log(error)
-      // alert(
-      //   `Failed to ${
-      //     type === 'create' ? 'create' : 'edit'
-      //   } a project. Try again!`
-      // )
     } finally {
       setIsSubmitting(false)
     }

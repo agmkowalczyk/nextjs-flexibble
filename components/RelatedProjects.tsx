@@ -1,5 +1,5 @@
 import { getUserProjects } from '@/lib/actions'
-import { ProjectInterface, UserProfile } from '@/common.types'
+import { ProjectInterface, ProjectSearch } from '@/common.types'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -9,9 +9,11 @@ type Props = {
 }
 
 const RelatedProjects = async ({ userId, projectId }: Props) => {
-  const result = (await getUserProjects(userId)) as { user?: UserProfile }
+  const result = (await getUserProjects(userId)) as {
+    projectCollection?: ProjectSearch
+  }
 
-  const filteredProjects = result?.user?.projects?.edges?.filter(
+  const filteredProjects = result?.projectCollection?.edges?.filter(
     ({ node }: { node: ProjectInterface }) => node?.id !== projectId
   )
 
@@ -20,9 +22,9 @@ const RelatedProjects = async ({ userId, projectId }: Props) => {
   return (
     <section className='flex flex-col mt-32 w-full'>
       <div className='flexBetween'>
-        <p className='text-base font-bold'>More by {result?.user?.name}</p>
+        <p className='text-base font-bold'>More</p>
         <Link
-          href={`/profile/${result?.user?.id}`}
+          href={`/profile/${userId}`}
           className='text-primary-purple text-base'
         >
           View All

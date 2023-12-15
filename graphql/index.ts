@@ -1,74 +1,83 @@
 export const getUserQuery = `
   query GetUser($email: String!) {
-    user(by: { email: $email }) {
-      id
-      name
-      email
-      avatarUrl
-      description
-      githubUrl
-      linkedinUrl
+    mongoDB {
+      user(by: { email: $email }) {
+        id
+        name
+        email
+        avatarUrl
+        description
+        githubUrl
+        linkedinUrl
+      }
     }
   }
 `
+
+export const getUserByIdQuery = `
+  query GetUser($id: ID!) {
+    mongoDB {
+      user(by: { id: $id }) {
+        id
+        name
+        email
+        avatarUrl
+        description
+        githubUrl
+        linkedinUrl
+      }
+    }
+  }
+`
+
 export const createUserMutation = `
 	mutation CreateUser($input: UserCreateInput!) {
-		userCreate(input: $input) {
-			user {
-				name
-				email
-				avatarUrl
-				description
-				githubUrl
-				linkedinUrl
-				id
-			}
-		}
+    mongoDB {
+      userCreate(input: $input) {
+        insertedId
+      }
+    }
 	}
 `
 
 export const createProjectMutation = `
 	mutation CreateProject($input: ProjectCreateInput!) {
-		projectCreate(input: $input) {
-			project {
-				id
-				title
-				description
-				createdBy {
-					email
-					name
-				}
-			}
-		}
+    mongoDB {
+      projectCreate(input: $input) {
+        insertedId
+      }
+    }
 	}
 `
 
 export const projectsQuery = `
-  query getProjects($filter: ProjectSearchFilterInput, $endCursor: String) {
-    projectSearch(first: 8, after: $endCursor, filter: $filter) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        node {
-          title
-          githubUrl
-          description
-          liveSiteUrl
-          id
-          image
-          category
-          createdBy {
-            id
-            email
-            name
-            avatarUrl
-          }
+  query getProjects($filter: ProjectCollection, $endCursor: String) {
+    mongoDB {
+      projectCollection(first: 8, after: $endCursor, filter: $filter) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
         }
-        cursor
+        edges {
+          node {
+            title
+            githubUrl
+            description
+            liveSiteUrl
+            id
+            image
+            category
+            createdBy {
+              id
+              email
+              name
+              avatarUrl
+            }
+          }
+          cursor
+        }
       }
     }
   }
@@ -76,35 +85,35 @@ export const projectsQuery = `
 
 export const getProjectByIdQuery = `
   query GetProjectById($id: ID!) {
-    project(by: { id: $id }) {
-      id
-      title
-      description
-      image
-      liveSiteUrl
-      githubUrl
-      category
-      createdBy {
+    mongoDB {
+      project(by: { id: $id }) {
         id
-        name
-        email
-        avatarUrl
+        title
+        description
+        image
+        liveSiteUrl
+        githubUrl
+        category
+        createdBy {
+          id
+          name
+          email
+          avatarUrl
+        }
       }
     }
   }
 `
-
 export const getProjectsOfUserQuery = `
   query getUserProjects($id: ID!, $last: Int = 4) {
-    user(by: { id: $id }) {
-      id
-      name
-      email
-      description
-      avatarUrl
-      githubUrl
-      linkedinUrl
-      projects(last: $last) {
+    mongoDB {
+      projectCollection(last: $last, filter: { createdBy: { id: { eq: $id } } }) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
         edges {
           node {
             id
@@ -119,24 +128,20 @@ export const getProjectsOfUserQuery = `
 
 export const deleteProjectMutation = `
   mutation DeleteProject($id: ID!) {
-    projectDelete(by: { id: $id }) {
-      deletedId
+    mongoDB {
+      projectDelete(by: { id: $id }) {
+        deletedCount
+      }
     }
   }
 `
 
 export const updateProjectMutation = `
 	mutation UpdateProject($id: ID!, $input: ProjectUpdateInput!) {
-		projectUpdate(by: { id: $id }, input: $input) {
-			project {
-				id
-				title
-				description
-				createdBy {
-					email
-					name
-				}
-			}
-		}
+    mongoDB {
+      projectUpdate(by: { id: $id }, input: $input) {
+        modifiedCount
+      }
+    }
 	}
 `

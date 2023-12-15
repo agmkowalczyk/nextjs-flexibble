@@ -1,10 +1,16 @@
-import { ProjectInterface, UserProfile } from '@/common.types'
+import { ProjectInterface, ProjectSearch, UserProfile } from '@/common.types'
 import Image from 'next/image'
 import Link from 'next/link'
 import Button from './Button'
 import ProjectCard from './ProjectCard'
 
-const ProfilePage = ({ user }: { user: UserProfile }) => (
+const ProfilePage = ({
+  user,
+  projects,
+}: {
+  user: UserProfile
+  projects: ProjectSearch
+}) => (
   <section className='flexCenter flex-col max-w-10xl w-full mx-auto paddings'>
     <section className='flexBetween max-lg:flex-col gap-10 w-full'>
       <div className='flex items-start flex-col w-full'>
@@ -33,9 +39,9 @@ const ProfilePage = ({ user }: { user: UserProfile }) => (
         </div>
       </div>
 
-      {user?.projects?.edges?.length > 0 ? (
+      {projects?.edges?.length > 0 ? (
         <Image
-          src={user?.projects?.edges[0]?.node?.image}
+          src={projects?.edges[0]?.node?.image}
           alt='project image'
           width={739}
           height={554}
@@ -56,7 +62,7 @@ const ProfilePage = ({ user }: { user: UserProfile }) => (
       <p className='w-full text-left text-lg font-semibold'>Recent Work</p>
 
       <div className='profile_projects'>
-        {user?.projects?.edges?.map(({ node }: { node: ProjectInterface }) => (
+        {projects?.edges?.map(({ node }: { node: ProjectInterface }) => (
           <ProjectCard
             key={`${node?.id}`}
             id={node?.id}

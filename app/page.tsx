@@ -1,20 +1,8 @@
-import { ProjectInterface } from '@/common.types'
+import { ProjectSearch, ProjectInterface } from '@/common.types'
 import Categories from '@/components/Categories'
 import LoadMore from '@/components/LoadMore'
 import ProjectCard from '@/components/ProjectCard'
 import { fetchAllProjects } from '@/lib/actions'
-
-type ProjectSearch = {
-  projectSearch: {
-    edges: { node: ProjectInterface }[]
-    pageInfo: {
-      hasPreviousPage: boolean
-      hasNextPage: boolean
-      startCursor: string
-      endCursor: string
-    }
-  }
-}
 
 type SearchParams = {
   category?: string | null
@@ -30,9 +18,11 @@ const Home = async ({
 }: {
   searchParams: SearchParams
 }) => {
-  const data = (await fetchAllProjects(category, endcursor)) as ProjectSearch
+  const data = (await fetchAllProjects(category, endcursor)) as {
+    projectCollection: ProjectSearch
+  }
 
-  const projects = data?.projectSearch?.edges || []
+  const projects = data?.projectCollection?.edges || []
 
   if (projects.length === 0) {
     return (
@@ -45,7 +35,7 @@ const Home = async ({
     )
   }
 
-  const pagination = data?.projectSearch?.pageInfo
+  const pagination = data?.projectCollection?.pageInfo
 
   return (
     <section className='flexStart flex-col paddings mb-16'>
@@ -57,9 +47,9 @@ const Home = async ({
             id={node?.id}
             image={node?.image}
             title={node?.title}
-            name={node?.createdBy.name}
-            avatarUrl={node?.createdBy.avatarUrl}
-            userId={node?.createdBy.id}
+            name={node?.createdBy?.name}
+            avatarUrl={node?.createdBy?.avatarUrl}
+            userId={node?.createdBy?.id}
           />
         ))}
       </section>

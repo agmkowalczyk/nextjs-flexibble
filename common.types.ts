@@ -25,6 +25,16 @@ export interface ProjectInterface {
   }
 }
 
+export interface ProjectSearch {
+  edges: { node: ProjectInterface }[]
+  pageInfo: {
+    hasPreviousPage: boolean
+    hasNextPage: boolean
+    startCursor: string
+    endCursor: string
+  }
+}
+
 export interface UserProfile {
   id: string
   name: string
