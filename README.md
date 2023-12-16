@@ -1,4 +1,4 @@
-# NEXT.js Share Prompts
+# NEXT.js Flexibble
 
 ## Description
 NEXT.js Flexibble (Next, Grafbase, React, MongoDB, TailwindCSS, GraphQL, Cloudinary)
@@ -18,7 +18,7 @@ NEXT.js Flexibble (Next, Grafbase, React, MongoDB, TailwindCSS, GraphQL, Cloudin
 
 ## Image
 
-![preview](https://github.com/agmkowalczyk/nextjs-flexibble/blob/main/screenshow_flexibble.png "NEXT.js Flexibble")
+![preview](https://github.com/agmkowalczyk/nextjs-flexibble/blob/main/screenshot_flexibble.png "NEXT.js Flexibble")
 
 \
 \
