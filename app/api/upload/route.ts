@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       use_filename: true,
       unique_filename: false,
       owerwrite: true,
-      transformation: [{ width: 1000, height: 752, crop: 'crop' }],
+      transformation: [{ width: 1000, resize: 'limit' }],
     }
 
     const result = await cloudinary.uploader.upload(path, options)

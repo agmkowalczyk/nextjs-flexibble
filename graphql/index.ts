@@ -53,7 +53,7 @@ export const createProjectMutation = `
 export const projectsQuery = `
   query getProjects($filter: ProjectCollection, $endCursor: String) {
     mongoDB {
-      projectCollection(first: 8, after: $endCursor, filter: $filter) {
+      projectCollection(first: 8, after: $endCursor, filter: $filter, orderBy: { id: DESC }) {
         pageInfo {
           hasNextPage
           hasPreviousPage

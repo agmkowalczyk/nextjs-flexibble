@@ -1,3 +1,29 @@
+# NEXT.js Share Prompts
+
+## Description
+NEXT.js Flexibble (Next, Grafbase, React, MongoDB, TailwindCSS, GraphQL, Cloudinary)
+
+<p>
+<img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white" alt="next.js">
+<img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="react">
+<img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongoDB">
+<img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="tailwind">
+<img src="https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white" alt="graphql">
+</p>
+
+## Live Preview
+[Click here](https://nextjs-flexibble-ruddy.vercel.app/)
+
+
+
+## Image
+
+![preview](https://github.com/agmkowalczyk/nextjs-flexibble/blob/main/screenshow_flexibble.png "NEXT.js Flexibble")
+
+\
+\
+\
+<br>
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
